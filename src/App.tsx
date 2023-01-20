@@ -28,13 +28,18 @@ function App() {
   useEffect(() => {
     if (data) {
       data?.allPosts.forEach((data: any) => {
-        const index = new Date(Number(data.createdAt)).getMonth();
-        graphData[index].count += 1;
+        const year = new Date(Number(data.createdAt)).getFullYear();
+        if (year === 2019) {
+          const index = new Date(Number(data.createdAt)).getMonth();
+          graphData[index].count += 1;
 
-        setGraphData(graphData);
+          setGraphData(graphData);
+        }
       });
     }
   }, [data]);
+
+  console.log(graphData);
 
   return <div className='App'></div>;
 }
