@@ -49,7 +49,7 @@ const HomePage: React.FC<HomePageProps> = () => {
         <div className='loading-text'>The data is loading</div>
       ) : (
         <div className='graph-container'>
-          <LineGraph data={graphData} />
+          <LineGraph data={graphData} xAxisProperty={'month'} yAxisProperty={'count'} />
         </div>
       )}
     </div>

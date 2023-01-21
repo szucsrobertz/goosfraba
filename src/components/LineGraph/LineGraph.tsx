@@ -6,12 +6,14 @@ import { BREAKPOINT_MOBILE, BREAKPOINT_TABLET } from '../../configs/constants';
 
 interface LineGraphProps {
   data: { month: string; count: number }[];
+  xAxisProperty: string;
+  yAxisProperty: string;
 }
 
-const LineGraph: React.FC<LineGraphProps> = ({ data }) => {
+const LineGraph: React.FC<LineGraphProps> = ({ data, xAxisProperty, yAxisProperty }) => {
   const accessors = {
-    xAccessor: (d: any) => d.month,
-    yAccessor: (d: any) => d.count,
+    xAccessor: (data: any) => data[xAxisProperty],
+    yAccessor: (data: any) => data[yAxisProperty],
   };
 
   function setNumberOfTicks(input: number) {
@@ -52,7 +54,7 @@ const LineGraph: React.FC<LineGraphProps> = ({ data }) => {
               </div>
             )}
           />
-          <AnimatedLineSeries dataKey='test' data={data} {...accessors} />
+          <AnimatedLineSeries dataKey='month' data={data} {...accessors} />
         </XYChart>
       )}
     </ParentSize>
