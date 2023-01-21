@@ -12,7 +12,7 @@ interface LineGraphProps {
 }
 
 const xAccessor = (data: any) => data.month;
-const yAccessor = (d: any) => d.count;
+const yAccessor = (data: any) => data.count;
 
 const BarChart: React.FC<LineGraphProps> = ({ data, width, height }) => {
   const xMax = width - 30;
