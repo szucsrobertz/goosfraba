@@ -43,7 +43,13 @@ const HomePage: React.FC = () => {
           <div className='graph-container'>
             <ParentSize>
               {(parent) => (
-                <BarChart data={graphData} width={parent.width} height={parent.height} />
+                <BarChart
+                  data={graphData}
+                  width={parent.width}
+                  height={parent.height}
+                  xAxisProperty={'month'}
+                  yAxisProperty={'count'}
+                />
               )}
             </ParentSize>
           </div>

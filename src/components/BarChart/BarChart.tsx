@@ -9,12 +9,20 @@ interface LineGraphProps {
   data: { month: string; count: number }[];
   width: number;
   height: number;
+  xAxisProperty: string;
+  yAxisProperty: string;
 }
 
-const xAccessor = (data: any) => data.month;
-const yAccessor = (data: any) => data.count;
+const xAccessor = (property: string) => (data: any) => data[property];
+const yAccessor = (property: string) => (data: any) => data[property];
 
-const BarChart: React.FC<LineGraphProps> = ({ data, width, height }) => {
+const BarChart: React.FC<LineGraphProps> = ({
+  data,
+  width,
+  height,
+  xAxisProperty,
+  yAxisProperty,
+}) => {
   const xMax = width - 30;
   const yMax = height - 120;
 
@@ -23,10 +31,10 @@ const BarChart: React.FC<LineGraphProps> = ({ data, width, height }) => {
       scaleBand<string>({
         range: [0, xMax],
         round: true,
-        domain: data.map(xAccessor),
+        domain: data.map((item) => xAccessor(xAxisProperty)(item)),
         padding: 0.4,
       }),
-    [xMax, data]
+    [xMax, data, xAxisProperty]
   );
 
   const yScale = useMemo(
@@ -34,9 +42,9 @@ const BarChart: React.FC<LineGraphProps> = ({ data, width, height }) => {
       scaleLinear<number>({
         range: [yMax, 0],
         round: true,
-        domain: [0, Math.max(...data.map(yAccessor))],
+        domain: [0, Math.max(...data.map((item) => yAccessor(yAxisProperty)(item)))],
       }),
-    [yMax, data]
+    [yMax, data, yAxisProperty]
   );
   return (
     <svg width={width} height={height}>
@@ -44,9 +52,9 @@ const BarChart: React.FC<LineGraphProps> = ({ data, width, height }) => {
       <GradientDarkgreenGreen id='teal' />
       <Group top={120 / 2} left={30}>
         {data.map((item) => {
-          const x = xAccessor(item);
+          const x = xAccessor(xAxisProperty)(item);
           const barWidth = xScale.bandwidth();
-          const y = yMax - (yScale(yAccessor(item)) ?? 0);
+          const y = yMax - (yScale(yAccessor(yAxisProperty)(item)) ?? 0);
           const barX = xScale(x);
           const barY = yMax - y;
           return (
