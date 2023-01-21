@@ -11,8 +11,8 @@ interface LineGraphProps {
   height: number;
 }
 
-const getMonth = (data: any) => data.month;
-const getMonthFrequency = (d: any) => d.count;
+const xAccessor = (data: any) => data.month;
+const yAccessor = (d: any) => d.count;
 
 const BarChart: React.FC<LineGraphProps> = ({ data, width, height }) => {
   const xMax = width - 30;
@@ -23,7 +23,7 @@ const BarChart: React.FC<LineGraphProps> = ({ data, width, height }) => {
       scaleBand<string>({
         range: [0, xMax],
         round: true,
-        domain: data.map(getMonth),
+        domain: data.map(xAccessor),
         padding: 0.4,
       }),
     [xMax, data]
@@ -34,7 +34,7 @@ const BarChart: React.FC<LineGraphProps> = ({ data, width, height }) => {
       scaleLinear<number>({
         range: [yMax, 0],
         round: true,
-        domain: [0, Math.max(...data.map(getMonthFrequency))],
+        domain: [0, Math.max(...data.map(yAccessor))],
       }),
     [yMax, data]
   );
@@ -43,19 +43,19 @@ const BarChart: React.FC<LineGraphProps> = ({ data, width, height }) => {
       <rect width={width} height={height} fill='url(#teal)' rx={14} />
       <GradientDarkgreenGreen id='teal' />
       <Group top={120 / 2} left={30}>
-        {data.map((d) => {
-          const month = getMonth(d);
+        {data.map((item) => {
+          const x = xAccessor(item);
           const barWidth = xScale.bandwidth();
-          const barHeight = yMax - (yScale(getMonthFrequency(d)) ?? 0);
-          const barX = xScale(month);
-          const barY = yMax - barHeight;
+          const y = yMax - (yScale(yAccessor(item)) ?? 0);
+          const barX = xScale(x);
+          const barY = yMax - y;
           return (
             <Bar
-              key={`bar-${month}`}
+              key={`bar-${x}`}
               x={barX}
               y={barY}
               width={barWidth}
-              height={barHeight}
+              height={y}
               fill='rgba(23, 233, 217, .5)'
             />
           );
