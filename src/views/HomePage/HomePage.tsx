@@ -9,6 +9,8 @@ import { DEFAULT_GRAPH_DATA, NUMBER_OF_POSTS, YEAR_CRITERIA } from '../../config
 import { Posts, PostsGraphData } from '../../interfaces/posts';
 
 import './HomePage.css';
+import BarChart from '../../components/BarChart/BarChart';
+import { ParentSize } from '@visx/responsive';
 
 const HomePage: React.FC = () => {
   const { loading, data } = useQuery(getAllPosts, {
@@ -37,9 +39,18 @@ const HomePage: React.FC = () => {
       {loading ? (
         <div className='loading-text'>The data is loading</div>
       ) : (
-        <div className='graph-container'>
-          <LineGraph data={graphData} xAxisProperty={'month'} yAxisProperty={'count'} />
-        </div>
+        <>
+          <div className='graph-container'>
+            <ParentSize>
+              {(parent) => (
+                <BarChart data={graphData} width={parent.width} height={parent.height} />
+              )}
+            </ParentSize>
+          </div>
+          <div className='graph-container'>
+            <LineGraph data={graphData} xAxisProperty={'month'} yAxisProperty={'count'} />
+          </div>
+        </>
       )}
     </div>
   );
