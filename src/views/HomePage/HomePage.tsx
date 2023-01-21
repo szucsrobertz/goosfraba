@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { useQuery } from '@apollo/client';
 
-import LineGraph from '../../components/LineGraph/LineGraph';
+import LineGraph from 'components/LineGraph/LineGraph';
 
-import { getAllPosts } from '../../queries/posts';
-import { DEFAULT_GRAPH_DATA, NUMBER_OF_POSTS, YEAR_CRITERIA } from '../../configs/constants';
+import { getAllPosts } from 'queries/posts';
+import { DEFAULT_GRAPH_DATA, NUMBER_OF_POSTS, YEAR_CRITERIA } from 'configs/constants';
 
-import { Posts, PostsGraphData } from '../../interfaces/posts';
+import { Posts, PostsGraphData } from 'interfaces/posts';
 
 import './HomePage.css';
-import BarChart from '../../components/BarChart/BarChart';
+import BarChart from 'components/BarChart/BarChart';
 import { ParentSize } from '@visx/responsive';
 
 const HomePage: React.FC = () => {

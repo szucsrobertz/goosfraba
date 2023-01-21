@@ -2,7 +2,7 @@ import React from 'react';
 import { AnimatedGrid, AnimatedLineSeries, XYChart, Tooltip, Axis } from '@visx/xychart';
 import { ParentSize } from '@visx/responsive';
 
-import { BREAKPOINT_MOBILE, BREAKPOINT_TABLET } from '../../configs/constants';
+import { BREAKPOINT_MOBILE, BREAKPOINT_TABLET } from 'configs/constants';
 
 interface LineGraphProps {
   data: { month: string; count: number }[];
