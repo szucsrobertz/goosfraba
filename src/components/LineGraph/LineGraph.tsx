@@ -47,7 +47,7 @@ const LineGraph: React.FC<LineGraphProps> = ({ data, xAxisProperty, yAxisPropert
             snapTooltipToDatumY
             showVerticalCrosshair
             showSeriesGlyphs
-            renderTooltip={({ tooltipData, colorScale }) => (
+            renderTooltip={({ tooltipData }) => (
               <div>
                 {accessors.xAccessor(tooltipData?.nearestDatum?.datum)} :{' '}
                 {accessors.yAccessor(tooltipData?.nearestDatum?.datum)} post(s)

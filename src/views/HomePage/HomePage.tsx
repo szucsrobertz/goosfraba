@@ -4,38 +4,27 @@ import { useQuery } from '@apollo/client';
 import LineGraph from '../../components/LineGraph/LineGraph';
 
 import { getAllPosts } from '../../queries/posts';
+import { DEFAULT_GRAPH_DATA, NUMBER_OF_POSTS, YEAR_CRITERIA } from '../../configs/constants';
+
+import { Posts, PostsGraphData } from '../../interfaces/posts';
 
 import './HomePage.css';
 
-interface HomePageProps {}
-
-const HomePage: React.FC<HomePageProps> = () => {
+const HomePage: React.FC = () => {
   const { loading, data } = useQuery(getAllPosts, {
-    variables: { count: 1000 },
+    variables: { count: NUMBER_OF_POSTS },
   });
 
-  const [graphData, setGraphData] = useState<{ month: string; count: number }[]>([
-    { month: 'January', count: 0 },
-    { month: 'February', count: 0 },
-    { month: 'March', count: 0 },
-    { month: 'April', count: 0 },
-    { month: 'May', count: 0 },
-    { month: 'June', count: 0 },
-    { month: 'July', count: 0 },
-    { month: 'August', count: 0 },
-    { month: 'September', count: 0 },
-    { month: 'October', count: 0 },
-    { month: 'November', count: 0 },
-    { month: 'December', count: 0 },
-  ]);
+  const [graphData, setGraphData] = useState<PostsGraphData[]>(DEFAULT_GRAPH_DATA);
 
   useEffect(() => {
     if (data) {
-      data?.allPosts.forEach((data: any) => {
-        const year = new Date(Number(data.createdAt)).getFullYear();
-        if (year === 2019) {
-          const index = new Date(Number(data.createdAt)).getMonth();
-          graphData[index].count += 1;
+      data?.allPosts.forEach((data: Posts) => {
+        const currentDate = new Date(Number(data.createdAt));
+        const year = currentDate.getFullYear();
+        if (year === YEAR_CRITERIA) {
+          const month = currentDate.getMonth();
+          graphData[month].count += 1;
 
           setGraphData(graphData);
         }
